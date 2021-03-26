@@ -88,3 +88,25 @@ def erosion(array,threshold):
             new_row.append(255 if same else 0)
         new_array.append(new_row)
     return numpy.array(new_array)
+
+def dilation(array,threshold):
+    filter=[255,255,255]
+    new_array=[]
+    for rows in array:
+        new_row=[]
+        for x in range(1,len(rows)-1):
+            bitmaps=[]
+            for i in range(len(filter)):
+                mean=0
+                for color in rows[x+i-1]:
+                    mean+=color
+                mean/=3
+                bitmaps.append(255 if mean>threshold else 0)
+            is_any_same=False
+            for a,b in zip(filter,bitmaps):
+                if a==b:
+                    is_any_same=True
+                    break
+            new_row.append(255 if is_any_same else 0)
+        new_array.append(new_row)
+    return numpy.array(new_array)
