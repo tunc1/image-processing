@@ -56,3 +56,13 @@ def mirror_horizontally(array):
             array[y,x]=array[y,image_width-x-1]
             array[y,image_width-x-1]=tmp
     return array
+
+
+def mirror_vertically(array):
+    image_height=len(array)
+    for y in range(int(image_height/2)):
+        for x in range(len(array[0])):
+            tmp=array[y,x].copy()
+            array[y,x]=array[image_height-y-1,x]
+            array[image_height-y-1,x]=tmp
+    return array
