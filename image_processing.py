@@ -25,3 +25,14 @@ def bitmap(array,threshold):
             tmp.append(255 if mean>threshold else 0)
         new_array.append(tmp)
     return numpy.array(new_array)
+
+def increase_each_pixel(array,value):
+    for y in range(len(array)):
+        for x in range(len(array[0])):
+            for z in range(len(array[0,0])):
+                old=array[y,x,z]
+                if value+old<256:
+                    array[y,x,z]+=value
+                else:
+                    array[y,x,z]=255
+    return array
