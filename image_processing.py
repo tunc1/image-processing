@@ -36,3 +36,14 @@ def increase_each_pixel(array,value):
                 else:
                     array[y,x,z]=255
     return array
+
+def decrease_each_pixel(array,value):
+    for y in range(len(array)):
+        for x in range(len(array[0])):
+            for z in range(len(array[0,0])):
+                old=array[y,x,z]
+                if old-value>-1:
+                    array[y,x,z]-=value
+                else:
+                    array[y,x,z]=0
+    return array
