@@ -66,3 +66,25 @@ def mirror_vertically(array):
             array[y,x]=array[image_height-y-1,x]
             array[image_height-y-1,x]=tmp
     return array
+
+def erosion(array,threshold):
+    filter=[255,255,255]
+    new_array=[]
+    for rows in array:
+        new_row=[]
+        for x in range(1,len(rows)-1):
+            bitmaps=[]
+            for i in range(len(filter)):
+                mean=0
+                for color in rows[x+i-1]:
+                    mean+=color
+                mean/=3
+                bitmaps.append(255 if mean>threshold else 0)
+            same=True
+            for a,b in zip(filter,bitmaps):
+                if a!=b:
+                    same=False
+                    break
+            new_row.append(255 if same else 0)
+        new_array.append(new_row)
+    return numpy.array(new_array)
