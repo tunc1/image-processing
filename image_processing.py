@@ -47,3 +47,12 @@ def decrease_each_pixel(array,value):
                 else:
                     array[y,x,z]=0
     return array
+
+def mirror_horizontally(array):
+    image_width=len(array[0])
+    for y in range(len(array)):
+        for x in range(int(image_width/2)):
+            tmp=array[y,x].copy()
+            array[y,x]=array[y,image_width-x-1]
+            array[y,image_width-x-1]=tmp
+    return array
