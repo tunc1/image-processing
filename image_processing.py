@@ -87,24 +87,23 @@ def erosion(array,kernel_size=1):
         new_array.append(new_row)
     return numpy.array(new_array)
 
-def dilation(array,threshold):
-    filter=[255,255,255]
+def dilation(array,kernel_size=1):
+    height=len(array)
+    width=len(array[0])
     new_array=[]
-    for rows in array:
+    for y in range(height):
         new_row=[]
-        for x in range(1,len(rows)-1):
-            bitmaps=[]
-            for i in range(len(filter)):
-                mean=0
-                for color in rows[x+i-1]:
-                    mean+=color
-                mean/=3
-                bitmaps.append(255 if mean>threshold else 0)
-            is_any_same=False
-            for a,b in zip(filter,bitmaps):
-                if a==b:
-                    is_any_same=True
-                    break
-            new_row.append(255 if is_any_same else 0)
+        for x in range(width):
+            biggest=array[y,x]
+            for i in range(1,kernel_size+1):
+                if y-i>=0 and biggest<array[y-i,x]:
+                    biggest=array[y-i,x]
+                if x-i>=0 and biggest<array[y,x-i]:
+                    biggest=array[y,x-i]
+                if y+i<height and biggest<array[y+i,x]:
+                    biggest=array[y+i,x]
+                if x+i<width and biggest<array[y,x+i]:
+                    biggest=array[y,x+i]
+            new_row.append(biggest)
         new_array.append(new_row)
     return numpy.array(new_array)
