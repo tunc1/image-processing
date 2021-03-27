@@ -110,3 +110,6 @@ def dilation(array,kernel_size=1):
 
 def opening(array,kernel_size=1):
     return dilation(erosion(array,kernel_size),kernel_size)
+
+def closing(array,kernel_size=1):
+    return erosion(dilation(array,kernel_size),kernel_size)
