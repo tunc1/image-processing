@@ -107,3 +107,6 @@ def dilation(array,kernel_size=1):
             new_row.append(biggest)
         new_array.append(new_row)
     return numpy.array(new_array)
+
+def opening(array,kernel_size=1):
+    return dilation(erosion(array,kernel_size),kernel_size)
