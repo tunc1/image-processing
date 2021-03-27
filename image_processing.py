@@ -57,7 +57,6 @@ def mirror_horizontally(array):
             array[y,image_width-x-1]=tmp
     return array
 
-
 def mirror_vertically(array):
     image_height=len(array)
     for y in range(int(image_height/2)):
@@ -67,25 +66,24 @@ def mirror_vertically(array):
             array[image_height-y-1,x]=tmp
     return array
 
-def erosion(array,threshold):
-    filter=[255,255,255]
+def erosion(array,kernel_size=1):
+    height=len(array)
+    width=len(array[0])
     new_array=[]
-    for rows in array:
+    for y in range(height):
         new_row=[]
-        for x in range(1,len(rows)-1):
-            bitmaps=[]
-            for i in range(len(filter)):
-                mean=0
-                for color in rows[x+i-1]:
-                    mean+=color
-                mean/=3
-                bitmaps.append(255 if mean>threshold else 0)
-            same=True
-            for a,b in zip(filter,bitmaps):
-                if a!=b:
-                    same=False
-                    break
-            new_row.append(255 if same else 0)
+        for x in range(width):
+            smallest=array[y,x]
+            for i in range(1,kernel_size+1):
+                if y-i>=0 and smallest>array[y-i,x]:
+                    smallest=array[y-i,x]
+                if x-i>=0 and smallest>array[y,x-i]:
+                    smallest=array[y,x-i]
+                if y+i<height and smallest>array[y+i,x]:
+                    smallest=array[y+i,x]
+                if x+i<width and smallest>array[y,x+i]:
+                    smallest=array[y,x+i]
+            new_row.append(smallest)
         new_array.append(new_row)
     return numpy.array(new_array)
 
