@@ -134,3 +134,6 @@ def edge_detection(array):
 
 def blur(array):
     return __apply_3d_kernel(array,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
+
+def sharpen(array):
+    return __apply_3d_kernel(array,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
