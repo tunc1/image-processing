@@ -114,14 +114,13 @@ def opening(array,kernel_size=1):
 def closing(array,kernel_size=1):
     return erosion(dilation(array,kernel_size),kernel_size)
 
-def edge_detection(array):
+def __apply_3d_kernel(array,kernel):
     new_array=[]
-    kernel=numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])
     for y in range(1,len(array)-1):
         new_row=[]
         for x in range(1,len(array[0])-1):
             tmp=numpy.array(array[y-1:y+2,x-1:x+2])
-            result=(tmp@kernel).sum()
+            result=(tmp*kernel).sum()
             if result>255:
                 result=255
             elif result<0:
@@ -129,3 +128,9 @@ def edge_detection(array):
             new_row.append(result)
         new_array.append(new_row)
     return numpy.array(new_array)
+
+def edge_detection(array):
+    return __apply_3d_kernel(array,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
+
+def blur(array):
+    return __apply_3d_kernel(array,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
