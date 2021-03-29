@@ -114,7 +114,7 @@ def opening(array,kernel_size=1):
 def closing(array,kernel_size=1):
     return erosion(dilation(array,kernel_size),kernel_size)
 
-def __apply_3d_kernel(array,kernel):
+def __apply_3x3_kernel(array,kernel):
     new_array=[]
     for y in range(1,len(array)-1):
         new_row=[]
@@ -130,10 +130,13 @@ def __apply_3d_kernel(array,kernel):
     return numpy.array(new_array)
 
 def edge_detection(array):
-    return __apply_3d_kernel(array,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
+    return __apply_3x3_kernel(array,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
 
 def blur(array):
-    return __apply_3d_kernel(array,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
+    return __apply_3x3_kernel(array,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
 
 def sharpen(array):
-    return __apply_3d_kernel(array,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
+    return __apply_3x3_kernel(array,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
+
+def bottom_sobel(array):
+    return __apply_3x3_kernel(array,numpy.array([[-1,-2,-1],[0,0,0],[1,2,1]]))
