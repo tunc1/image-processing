@@ -143,3 +143,6 @@ def bottom_sobel(array):
 
 def top_sobel(array):
     return __apply_3x3_kernel(array,numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]]))
+
+def right_sobel(array):
+    return __apply_3x3_kernel(array,numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]]))
