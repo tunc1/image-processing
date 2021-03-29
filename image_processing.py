@@ -149,3 +149,6 @@ def right_sobel(array):
 
 def left_sobel(array):
     return __apply_3x3_kernel(array,numpy.array([[1,0,-1],[2,0,-2],[1,0,-1]]))
+
+def identity(array):
+    return __apply_3x3_kernel(array,numpy.array([[0,0,0],[0,1,0],[0,0,0]]))
