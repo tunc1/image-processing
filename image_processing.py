@@ -129,6 +129,9 @@ def __apply_3x3_kernel(array,kernel):
         new_array.append(new_row)
     return numpy.array(new_array)
 
+def positive_laplace(array):
+    return __apply_3x3_kernel(array,numpy.array([[0,1,0],[1,-4,1],[0,1,0]]))
+
 def edge_detection(array):
     return __apply_3x3_kernel(array,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
 
