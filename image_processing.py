@@ -86,7 +86,7 @@ def mirror_vertically(image):
 
 def erosion(image,kernel_size=1):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies erosion, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies erosion, returns image
     """
     height=len(image)
     width=len(image[0])
@@ -110,7 +110,7 @@ def erosion(image,kernel_size=1):
 
 def dilation(image,kernel_size=1):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies dilation, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies dilation, returns image
     """
     height=len(image)
     width=len(image[0])
@@ -134,13 +134,13 @@ def dilation(image,kernel_size=1):
 
 def opening(image,kernel_size=1):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies opening, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies opening, returns image
     """
     return dilation(erosion(image,kernel_size),kernel_size)
 
 def closing(image,kernel_size=1):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies closing, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies closing, returns image
     """
     return erosion(dilation(image,kernel_size),kernel_size)
 
@@ -161,72 +161,72 @@ def __apply_3x3_kernel(image,kernel):
 
 def positive_laplace(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies positive laplace, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies positive laplace, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0,1,0],[1,-4,1],[0,1,0]]))
 
 def negative_laplace(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies negative laplace, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies negative laplace, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,4,-1],[0,-1,0]]))
 
 def edge_detection(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies edge detection, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies edge detection, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
 
 def blur(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), blurs the image, returns image
+    Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
 
 def sharpen(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), sharpens the image, returns image
+    Takes in a grayscale or bitmap image (NumPy array), sharpens the image, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
 
 def bottom_sobel(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies bottom sobel, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies bottom sobel, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-1,-2,-1],[0,0,0],[1,2,1]]))
 
 def top_sobel(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies top sobel, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies top sobel, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]]))
 
 def right_sobel(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies right sobel, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies right sobel, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]]))
 
 def left_sobel(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies left sobel, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies left sobel, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[1,0,-1],[2,0,-2],[1,0,-1]]))
 
 def identity(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies identity, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies identity, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0,0,0],[0,1,0],[0,0,0]]))
 
 def emboss(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies emboss, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies emboss, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-2,-1,0],[-1,1,1],[0,1,2]]))
 
 def custom(image):
     """
-    Takes in an grayscale or bitmap image (NumPy array), applies custom, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies custom, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0,0,0],[0,1,0],[0,0,0]]))
