@@ -224,3 +224,9 @@ def emboss(image):
     Takes in an grayscale or bitmap image (NumPy array), applies emboss, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-2,-1,0],[-1,1,1],[0,1,2]]))
+
+def custom(image):
+    """
+    Takes in an grayscale or bitmap image (NumPy array), applies custom, returns image
+    """
+    return __apply_3x3_kernel(image,numpy.array([[0,0,0],[0,1,0],[0,0,0]]))
