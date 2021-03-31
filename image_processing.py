@@ -171,9 +171,9 @@ def negative_laplace(image):
     """
     return __apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,4,-1],[0,-1,0]]))
 
-def edge_detection(image):
+def laplace(image):
     """
-    Takes in a grayscale or bitmap image (NumPy array), applies edge detection, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies laplace, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
 
