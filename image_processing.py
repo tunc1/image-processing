@@ -202,29 +202,27 @@ def sharpen(image):
     """
     return __apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
 
-def bottom_sobel(image):
+def sobel(image):
     """
-    Takes in a grayscale or bitmap image (NumPy array), applies bottom sobel, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies sobel, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[-1,-2,-1],[0,0,0],[1,2,1]]))
-
-def top_sobel(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies top sobel, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]]))
-
-def right_sobel(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies right sobel, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]]))
-
-def left_sobel(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies left sobel, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[1,0,-1],[2,0,-2],[1,0,-1]]))
+    kernely=numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]])
+    kernelx=numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]])
+    new_image=[]
+    for y in range(1,len(image)-1):
+        new_row=[]
+        for x in range(1,len(image[0])-1):
+            tmp=numpy.array(image[y-1:y+2,x-1:x+2])
+            resultx=(tmp*kernelx).sum()
+            resulty=(tmp*kernely).sum()
+            result=math.sqrt(math.pow(resultx,2)+math.pow(resulty,2))
+            if result>255:
+                result=255
+            elif result<0:
+                result=0
+            new_row.append(result)
+        new_image.append(new_row)
+    return numpy.array(new_image)
 
 def identity(image):
     """
