@@ -176,13 +176,19 @@ def laplace(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies laplace, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
+    return __apply_3x3_kernel(image,numpy.array([[1,1,1],[1,-8,1],[1,1,1]]))
 
-def blur(image):
+def gaussian_blur(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
+
+def box_blur(image):
+    """
+    Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
+    """
+    return __apply_3x3_kernel(image,numpy.ones((3,3))*1/9)
 
 def sharpen(image):
     """
@@ -253,3 +259,11 @@ def prewitt(image):
             new_row.append(result)
         new_image.append(new_row)
     return numpy.array(new_image)
+
+from PIL import Image
+
+image=Image.open("download.jpg")
+image=numpy.array(image)
+image=box_blur(grayscale(image))
+image=Image.fromarray(image)
+image.show()
