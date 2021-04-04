@@ -178,6 +178,12 @@ def laplace(image):
     """
     return __apply_3x3_kernel(image,numpy.array([[1,1,1],[1,-8,1],[1,1,1]]))
 
+def laplacian_edge_detection(image):
+    """
+    Takes in a grayscale or bitmap image (NumPy array), applies laplace, returns image
+    """
+    return __apply_3x3_kernel(image,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
+
 def gaussian_blur(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
@@ -259,11 +265,3 @@ def prewitt(image):
             new_row.append(result)
         new_image.append(new_row)
     return numpy.array(new_image)
-
-from PIL import Image
-
-image=Image.open("download.jpg")
-image=numpy.array(image)
-image=box_blur(grayscale(image))
-image=Image.fromarray(image)
-image.show()
