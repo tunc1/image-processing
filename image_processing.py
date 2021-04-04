@@ -145,6 +145,23 @@ def closing(image,kernel_size=1):
     """
     return erosion(dilation(image,kernel_size),kernel_size)
 
+def __apply_2_3x3_kernel(image,kernelx,kernely):
+    new_image=[]
+    for y in range(1,len(image)-1):
+        new_row=[]
+        for x in range(1,len(image[0])-1):
+            tmp=numpy.array(image[y-1:y+2,x-1:x+2])
+            resultx=(tmp*kernelx).sum()
+            resulty=(tmp*kernely).sum()
+            result=math.sqrt(math.pow(resultx,2)+math.pow(resulty,2))
+            if result>255:
+                result=255
+            elif result<0:
+                result=0
+            new_row.append(result)
+        new_image.append(new_row)
+    return numpy.array(new_image)
+
 def __apply_3x3_kernel(image,kernel):
     new_image=[]
     for y in range(1,len(image)-1):
@@ -206,23 +223,7 @@ def sobel(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies sobel, returns image
     """
-    kernely=numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]])
-    kernelx=numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]])
-    new_image=[]
-    for y in range(1,len(image)-1):
-        new_row=[]
-        for x in range(1,len(image[0])-1):
-            tmp=numpy.array(image[y-1:y+2,x-1:x+2])
-            resultx=(tmp*kernelx).sum()
-            resulty=(tmp*kernely).sum()
-            result=math.sqrt(math.pow(resultx,2)+math.pow(resulty,2))
-            if result>255:
-                result=255
-            elif result<0:
-                result=0
-            new_row.append(result)
-        new_image.append(new_row)
-    return numpy.array(new_image)
+    return __apply_2_3x3_kernel(image,numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]]),numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]]))
 
 def identity(image):
     """
@@ -246,20 +247,4 @@ def prewitt(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies prewitt, returns image
     """
-    kernely=numpy.array([[1,1,1],[0,0,0],[-1,-1,-1]])
-    kernelx=numpy.array([[-1,0,1],[-1,0,1],[-1,0,1]])
-    new_image=[]
-    for y in range(1,len(image)-1):
-        new_row=[]
-        for x in range(1,len(image[0])-1):
-            tmp=numpy.array(image[y-1:y+2,x-1:x+2])
-            resultx=(tmp*kernelx).sum()
-            resulty=(tmp*kernely).sum()
-            result=math.sqrt(math.pow(resultx,2)+math.pow(resulty,2))
-            if result>255:
-                result=255
-            elif result<0:
-                result=0
-            new_row.append(result)
-        new_image.append(new_row)
-    return numpy.array(new_image)
+    return __apply_2_3x3_kernel(image,numpy.array([[1,1,1],[0,0,0],[-1,-1,-1]]),numpy.array([[-1,0,1],[-1,0,1],[-1,0,1]]))
