@@ -9,11 +9,7 @@ def grayscale(image):
     for rows in image:
         tmp=[]
         for pixel in rows:
-            mean=0
-            for color in pixel:
-                mean+=color
-            mean/=3
-            tmp.append(mean)
+            tmp.append(numpy.mean(pixel))
         new_image.append(tmp)
     return numpy.array(new_image)
 
@@ -25,10 +21,7 @@ def bitmap(image,threshold=127):
     for rows in image:
         tmp=[]
         for pixel in rows:
-            mean=0
-            for color in pixel:
-                mean+=color
-            mean/=3
+            mean=numpy.mean(pixel)
             tmp.append(255 if mean>threshold else 0)
         new_image.append(tmp)
     return numpy.array(new_image)
@@ -177,41 +170,25 @@ def __apply_3x3_kernel(image,kernel):
         new_image.append(new_row)
     return numpy.array(new_image)
 
-def positive_laplace(image):
+def laplacian(image):
     """
-    Takes in a grayscale or bitmap image (NumPy array), applies positive laplace, returns image
+    Takes in a grayscale or bitmap image (NumPy array), applies laplacian, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[0,1,0],[1,-4,1],[0,1,0]]))
-
-def negative_laplace(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies negative laplace, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,4,-1],[0,-1,0]]))
-
-def laplace(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies laplace, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[1,1,1],[1,-8,1],[1,1,1]]))
-
-def laplacian_edge_detection(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies laplace, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]))
+    kernel=numpy.ones((3,3))*-1
+    kernel[1,1]=8
+    return __apply_3x3_kernel(image,kernel)
 
 def gaussian_blur(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]))
+    return __apply_3x3_kernel(image,numpy.array([[1,2,1],[2,4,2],[1,2,1]])/16)
 
 def box_blur(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
     """
-    return __apply_3x3_kernel(image,numpy.ones((3,3))*1/9)
+    return __apply_3x3_kernel(image,numpy.ones((3,3))/9)
 
 def sharpen(image):
     """
@@ -229,19 +206,15 @@ def identity(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies identity, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[0,0,0],[0,1,0],[0,0,0]]))
+    kernel=numpy.zeros((3,3))
+    kernel[1,1]=1
+    return __apply_3x3_kernel(image,kernel)
 
 def emboss(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies emboss, returns image
     """
     return __apply_3x3_kernel(image,numpy.array([[-2,-1,0],[-1,1,1],[0,1,2]]))
-
-def custom(image):
-    """
-    Takes in a grayscale or bitmap image (NumPy array), applies custom, returns image
-    """
-    return __apply_3x3_kernel(image,numpy.array([[0,0,0],[0,1,0],[0,0,0]]))
 
 def prewitt(image):
     """
