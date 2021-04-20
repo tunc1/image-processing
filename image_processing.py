@@ -146,7 +146,7 @@ def __apply_2_3x3_kernel(image,kernelx,kernely):
             tmp=numpy.array(image[y-1:y+2,x-1:x+2])
             resultx=(tmp*kernelx).sum()
             resulty=(tmp*kernely).sum()
-            result=math.sqrt(math.pow(resultx,2)+math.pow(resulty,2))
+            result=math.sqrt(resultx**2+resulty**2)
             if result>255:
                 result=255
             elif result<0:
