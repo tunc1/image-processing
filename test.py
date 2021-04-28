@@ -33,3 +33,9 @@ class ImageProcessingTest(TestCase):
         expected=numpy.array([[[64,151,7],[231,159,36]],[[48,102,192],[12,183,246]]])
         output=image_processing.mirror_vertically(input)
         self.assertTrue(numpy.array_equal(output,expected))
+
+    def test_mirror_horizontally(self):
+        input=numpy.array([[[231,159,36],[64,151,7]],[[12,183,246],[48,102,192]]])
+        expected=numpy.array([[[12,183,246],[48,102,192]],[[231,159,36],[64,151,7]]])
+        output=image_processing.mirror_horizontally(input)
+        self.assertTrue(numpy.array_equal(output,expected))
