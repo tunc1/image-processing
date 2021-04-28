@@ -138,7 +138,7 @@ def closing(image,kernel_size=1):
     """
     return erosion(dilation(image,kernel_size),kernel_size)
 
-def __apply_2_3x3_kernel(image,kernelx,kernely):
+def apply_2_3x3_kernel(image,kernelx,kernely):
     new_image=[]
     for y in range(1,len(image)-1):
         new_row=[]
@@ -200,7 +200,7 @@ def sobel(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies sobel, returns image
     """
-    return __apply_2_3x3_kernel(image,numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]]),numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]]))
+    return apply_2_3x3_kernel(image,numpy.array([[1,2,1],[0,0,0],[-1,-2,-1]]),numpy.array([[-1,0,1],[-2,0,2],[-1,0,1]]))
 
 def identity(image):
     """
@@ -220,4 +220,4 @@ def prewitt(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies prewitt, returns image
     """
-    return __apply_2_3x3_kernel(image,numpy.array([[1,1,1],[0,0,0],[-1,-1,-1]]),numpy.array([[-1,0,1],[-1,0,1],[-1,0,1]]))
+    return apply_2_3x3_kernel(image,numpy.array([[1,1,1],[0,0,0],[-1,-1,-1]]),numpy.array([[-1,0,1],[-1,0,1],[-1,0,1]]))
