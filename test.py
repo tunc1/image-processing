@@ -51,3 +51,10 @@ class ImageProcessingTest(TestCase):
         expected=numpy.array([[0,255,0],[255,255,255],[0,255,0]])
         output=image_processing.dilation(input)
         self.assertTrue(numpy.array_equal(output,expected))
+    
+    def test_apply_3x3_kernel(self):
+        kernel=numpy.zeros((3,3))
+        kernel[1,1]=1
+        input=numpy.array([[231,159,36],[64,151,7],[12,183,246],[48,102,192]])
+        output=image_processing.apply_3x3_kernel(input,kernel)
+        self.assertTrue(numpy.array_equal(output,[[151],[183]]))
