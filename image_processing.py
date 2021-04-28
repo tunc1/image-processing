@@ -155,7 +155,7 @@ def apply_2_3x3_kernel(image,kernelx,kernely):
         new_image.append(new_row)
     return numpy.array(new_image)
 
-def __apply_3x3_kernel(image,kernel):
+def apply_3x3_kernel(image,kernel):
     new_image=[]
     for y in range(1,len(image)-1):
         new_row=[]
@@ -176,25 +176,25 @@ def laplacian(image):
     """
     kernel=numpy.ones((3,3))*-1
     kernel[1,1]=8
-    return __apply_3x3_kernel(image,kernel)
+    return apply_3x3_kernel(image,kernel)
 
 def gaussian_blur(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[1,2,1],[2,4,2],[1,2,1]])/16)
+    return apply_3x3_kernel(image,numpy.array([[1,2,1],[2,4,2],[1,2,1]])/16)
 
 def box_blur(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), blurs the image, returns image
     """
-    return __apply_3x3_kernel(image,numpy.ones((3,3))/9)
+    return apply_3x3_kernel(image,numpy.ones((3,3))/9)
 
 def sharpen(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), sharpens the image, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
+    return apply_3x3_kernel(image,numpy.array([[0,-1,0],[-1,5,-1],[0,-1,0]]))
 
 def sobel(image):
     """
@@ -208,13 +208,13 @@ def identity(image):
     """
     kernel=numpy.zeros((3,3))
     kernel[1,1]=1
-    return __apply_3x3_kernel(image,kernel)
+    return apply_3x3_kernel(image,kernel)
 
 def emboss(image):
     """
     Takes in a grayscale or bitmap image (NumPy array), applies emboss, returns image
     """
-    return __apply_3x3_kernel(image,numpy.array([[-2,-1,0],[-1,1,1],[0,1,2]]))
+    return apply_3x3_kernel(image,numpy.array([[-2,-1,0],[-1,1,1],[0,1,2]]))
 
 def prewitt(image):
     """
