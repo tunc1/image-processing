@@ -54,9 +54,9 @@ def decrease_each_pixel(image,value):
                     image[y,x,z]=0
     return image
 
-def mirror_horizontally(image):
+def mirror_vertically(image):
     """
-    Takes in an image (NumPy array), mirrors horizontally, returns image
+    Takes in an image (NumPy array), mirrors vertically, returns image
     """
     image_width=len(image[0])
     for y in range(len(image)):
@@ -66,9 +66,9 @@ def mirror_horizontally(image):
             image[y,image_width-x-1]=tmp
     return image
 
-def mirror_vertically(image):
+def mirror_horizontally(image):
     """
-    Takes in an image (NumPy array), mirrors vertically, returns image
+    Takes in an image (NumPy array), mirrors horizontally, returns image
     """
     image_height=len(image)
     for y in range(int(image_height/2)):
