@@ -45,3 +45,9 @@ class ImageProcessingTest(TestCase):
         expected=numpy.array([[0,0,0],[0,255,0],[0,0,0]])
         output=image_processing.erosion(input)
         self.assertTrue(numpy.array_equal(output,expected))
+
+    def test_dilation(self):
+        input=numpy.array([[0,0,0],[0,255,0],[0,0,0]])
+        expected=numpy.array([[0,255,0],[255,255,255],[0,255,0]])
+        output=image_processing.dilation(input)
+        self.assertTrue(numpy.array_equal(output,expected))
