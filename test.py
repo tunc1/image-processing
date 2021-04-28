@@ -15,3 +15,9 @@ class ImageProcessingTest(TestCase):
         expected=numpy.array([[0,255],[255,0]])
         output=image_processing.bitmap(input)
         self.assertTrue(numpy.array_equal(output,expected))
+
+    def test_increase_each_pixel(self):
+        input=numpy.array([[[64,151,7],[231,159,36]],[[12,183,246],[48,102,192]]])
+        expected=numpy.array([[[94,181,37],[255,189,66]],[[42,213,255],[78,132,222]]])
+        output=image_processing.increase_each_pixel(input,30)
+        self.assertTrue(numpy.array_equal(output,expected))
