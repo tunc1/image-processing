@@ -58,3 +58,12 @@ class ImageProcessingTest(TestCase):
         input=numpy.array([[231,159,36],[64,151,7],[12,183,246],[48,102,192]])
         output=image_processing.apply_3x3_kernel(input,kernel)
         self.assertTrue(numpy.array_equal(output,[[151],[183]]))
+    
+    def test_apply_2_3x3_kernel(self):
+        kernel1=numpy.zeros((3,3))
+        kernel1[1,1]=1
+        kernel2=numpy.ones((3,3))
+        kernel2[1,1]=0
+        input=numpy.array([[231,159,36],[64,151,7],[12,183,246],[48,102,192]])
+        output=image_processing.apply_2_3x3_kernel(input,kernel1,kernel2)
+        self.assertTrue(numpy.array_equal(output,[[255],[255]]))
