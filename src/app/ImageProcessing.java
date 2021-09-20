@@ -1,6 +1,6 @@
 package app;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class ImageProcessing
