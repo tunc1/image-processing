@@ -57,4 +57,8 @@ public class ImageProcessing
         }
         return image;
     }
+    public BufferedImage decreaseEachPixel(BufferedImage image,int value)
+    {
+        return increaseEachPixel(image,value*-1);
+    }
 }
