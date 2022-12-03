@@ -61,4 +61,18 @@ public class ImageProcessing
     {
         return increaseEachPixel(image,value*-1);
     }
+    public BufferedImage mirrorVertically(BufferedImage image)
+    {
+        for(int y=0;y<image.getHeight();y++)
+        {
+            for(int x=0;x<image.getWidth()/2;x++)
+            {
+                int pixel=image.getRGB(x,y);
+                int otherSide=image.getRGB(image.getWidth()-1-x,y);
+                image.setRGB(image.getWidth()-1-x,y,pixel);
+                image.setRGB(x,y,otherSide);
+            }
+        }
+        return image;
+    }
 }
