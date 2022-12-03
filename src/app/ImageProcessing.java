@@ -75,4 +75,18 @@ public class ImageProcessing
         }
         return image;
     }
+    public BufferedImage mirrorHorizontally(BufferedImage image)
+    {
+        for(int y=0;y<image.getHeight()/2;y++)
+        {
+            for(int x=0;x<image.getWidth();x++)
+            {
+                int pixel=image.getRGB(x,y);
+                int otherSide=image.getRGB(x,image.getHeight()-1-y);
+                image.setRGB(x,image.getHeight()-1-y,pixel);
+                image.setRGB(x,y,otherSide);
+            }
+        }
+        return image;
+    }
 }
