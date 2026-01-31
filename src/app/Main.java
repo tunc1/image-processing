@@ -3,41 +3,63 @@ package app;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.InvocationTargetException;
 
 public class Main
 {
-    public static void main(String[] args) throws IOException, InvocationTargetException, IllegalAccessException
+    public static void main(String[] args)
     {
-        List<String> methodsThatRequireInt=List.of("increaseEachPixel","bitmap");
-        if(args.length<3)
-            throw new IllegalArgumentException("Missing Arguments!");
-        String filePath=args[0];
-        String outputFilePath=args[1];
-        String methodName=args[2];
-        boolean requiresAdditionalParameter=methodsThatRequireInt.contains(methodName);
-        if(requiresAdditionalParameter&&args.length<4)
-            throw new IllegalArgumentException("Missing Arguments!");
-        BufferedImage image = ImageIO.read(new File(filePath));
-        ImageProcessing imageProcessing=new ImageProcessing();
-        for(Method method: ImageProcessing.class.getDeclaredMethods())
+        try
+	{
+            if(args.length>2)
+	    {
+                String filePath=args[0];
+                String outputFilePath=args[1];
+                String methodName=args[2];
+                ImageProcessing imageProcessing=new ImageProcessing();
+		Method method=getMethod(methodName,ImageProcessing.class);
+		Parameter[] methodParameters=method.getParameters();
+		if(methodParameters.length-1==args.length-3)
+		{
+		    Object[] parameters=new Object[methodParameters.length];
+		    parameters[0]=ImageIO.read(new File(filePath));
+		    for(int i=1;i<parameters.length;i++)
+			parameters[i]=Integer.valueOf(args[i+2]);
+		    BufferedImage processedImage=(BufferedImage)method.invoke(imageProcessing,parameters);
+		    ImageIO.write(processedImage, "png", new File(outputFilePath));
+                    System.out.println("Done");
+		}
+		else
+                    System.err.println("Wrong amount of arguments");
+            }
+	    else
+                System.err.println("Missing arguments");
+	    
+	}
+	catch(NoSuchMethodException e)
+	{
+	    System.err.println("Unknown operation");
+	}
+	catch(InvocationTargetException e)
+	{
+	    Throwable rootException=e.getTargetException();
+	    System.err.println(rootException.getMessage());
+	}
+	catch(Exception e)
+	{
+	    System.err.println(e.getMessage());
+	}
+    }
+    private static Method getMethod(String methodName,Class klass) throws NoSuchMethodException
+    {
+	for(Method method: klass.getMethods())
         {
             if(method.getName().equals(methodName))
-            {
-                BufferedImage processedImage;
-                if(requiresAdditionalParameter)
-                {
-                    int parameter=Integer.parseInt(args[3]);
-                    processedImage=(BufferedImage)method.invoke(imageProcessing,image,parameter);
-                }
-                else
-                    processedImage=(BufferedImage)method.invoke(imageProcessing,image);
-                ImageIO.write(processedImage, "png", new File(outputFilePath));
-                System.out.println("Done");
-            }
-        }
+            	return method;
+	}
+	throw new NoSuchMethodException();
     }
 }

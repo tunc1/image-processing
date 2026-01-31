@@ -85,4 +85,10 @@ public class ImageProcessing
         loop(image.getHeight()/2,image.getWidth(),runnable);
         return image;
     }
+    public BufferedImage crop(BufferedImage image, int x, int y,int width,int height)
+    {
+	if(x+width>image.getWidth()||y+height>image.getHeight())
+	    throw new IllegalArgumentException("Out of bounds");
+	return image.getSubimage(x,y,width,height);
+    }
 }
